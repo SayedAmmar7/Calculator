@@ -1,27 +1,38 @@
-const buttons = document.getElementsByClassName('button');
-const inputfield = document.getElementById('number-input');
 
 
 
-for (let i = 0; i < buttons.length; i++) {
+const buttons = document.querySelectorAll('.button');
+const inputfield = document.getElementById('input-number');
+const infopar = document.getElementById('info');
+
+
+for(let i = 0 ; i < buttons.length ; i++ ) {
     buttons[i].addEventListener('click', (event) => {
-        let inputtext = "";
+        let inputtext = '';
+        infopar.style.display ='none';
         switch (event.target.innerHTML) {
             case 'C':
                 break;
 
-            case '←':
-                inputtext = inputfield.value.subs(0, inputfield.value-1);
-                break;
+          
 
             case '=':
-                inputtext = eval(inputfield.value);
+                try{
+                    inputtext = eval(inputfield.value);
+                }catch(e){
+                    inputtext='';
+                    infopar.style.display = 'block';
+                    infopar.innerHTML = 'Invalid operation';
+                }                
                 break;
-                
+
+                case '←':
+                    inputtext = inputfield.value.slice(0, inputfield.value.length-1);
+                    break;
+
                 default:
-                    inputtext= '${inputfield.value}${event.target.innerHTML}';
-          
+                    inputtext= `${inputfield.value}${event.target.innerHTML}`;
         }
-    })
+        inputfield.value = inputtext;
+    });
 }
-console.log(buttons.length)
